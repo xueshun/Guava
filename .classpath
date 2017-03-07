@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="object"/>
+	<classpathentry kind="src" path="Range"/>
+	<classpathentry kind="src" path="Collections"/>
+	<classpathentry kind="src" path="caching"/>
+	<classpathentry kind="src" path="IO"/>
+	<classpathentry kind="src" path="Future"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="E:/MyDownloads/jar/guava/guava-18.0.jar" sourcepath="E:/MyDownloads/jar/guava/guava-18.0-sources.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
