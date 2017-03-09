@@ -78,8 +78,44 @@ package serviceUse;
 			如要自定义schedules则可以使用 CustomScheduler类来辅助实现；
 			
 		4.AbstractService 如需要自定义的线程管理，可以通过扩展AbstractService类来实现。
-			一般情况下，使用上面的几个实现类就已经
- 
+			一般情况下，使用上面的几个实现类就已经满足需求了，但如果在服务执行过程中有一些特定
+			处理需求，则建议继承AbstractService类
+			
+			继承AbstractService方法必须实现两个方法
+			doStart():首次调用startAsync()时会同时调用doStart(),doStart()内部需要处理所有初始化
+				工作，如果启动成功则调用notifyStarted()方法，启动失败则调用notifyFailed()
+			doStop():首次调用stopAsync()会同时调用doStop()，doStop()要做的事情就是停止服务，如果
+				停止成功则调用nitifyStopped()方法，停止失败则调用notigyFailed()方法。
+			doStart和doStop方法的实现需要考虑下性能，尽可能的低延迟。如果初始化的开销较大，如读文件，打开网络连接，
+				或者其他任何可能引起阻塞的操作，建议移到另外一个单独的线程去处理。
+				
+		 5.ServiceManage
+		 	Guava 除了对Service接口提供基础的实现类，Guava还提供了ServiceManager类使得涉及多个Service
+		 		集合操作更加容易。通过实例化ServiceManager类来创建一个Service。可以通过以下方法管理它们
+		 	                    
+		 	1.startAsync():     将启动所有被管理的服务。如果当前服务的状态都是new的话，那么你只能调用该方法
+		 					           一次，这跟Service.startAsync()是一样的
+		 					           
+		 	2.stopAsync():      停止所有被管理的服务。
+		 		
+		 	3.addListener:      会添加一个ServiceManager.Listener，在服务状态转换中会调用该listener
+		 	
+		 	4.awaitHealthy():   会等待所有的服务达到Running状态
+		 	
+		 	5.awaitStopper():   会等待所有服务达到终止状态
+		 		
+		 		检测类的方法
+		 	6.isHealthy():      如果所有的服务处于Running状态，则返回True
+		 		
+		 	7.serviceByState(): 以状态为索引返回当前所有服务的快照
+		 	
+		 	8.startupTimes():   返回一个Map对象，记录被管理的服务启动的耗时，已毫秒为单位，同时map默认
+		 						启动时间排序
+		 	
+ 			我们建议整个服务的生命周期都能通过ServiceManager来管理，不过即使状态转换是通过其他机制触发的、
+ 				也不影响ServiceManager方法的正确执行。例如：当一个服务不是通过startAsync()、而是其他机制
+ 				启动时，listeners 仍然可以被正常调用、awaitHealthy()也能够正常工作。ServiceManager 唯一
+ 				强制的要求是当其被创建时所有的服务必须处于New状态。
  */
 public class Demo01 {
 
