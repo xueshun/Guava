@@ -5,6 +5,18 @@ import java.util.concurrent.TimeUnit;
 import com.google.common.util.concurrent.AbstractScheduledService;
 import com.google.common.util.concurrent.MoreExecutors;
 
+/**
+ * 3.AbstractScheduledService类用于在运行时处理一些周期性的任务。
+			子类可以实现 runOneIteration()方法定义一个周期执行的任务，以及相应的startUp()
+			和shutDown()方法。为了能够描述执行周期，你需要实现scheduler()方法。
+			通常情况下，你可以使用AbstractScheduledService.Scheduler类提供的两种调度器：
+			newFixedRateSchedule(initialDelay, delay, TimeUnit)  
+			和newFixedDelaySchedule(initialDelay, delay, TimeUnit)，类似于JDK并发包中
+			ScheduledExecutorService类提供的两种调度方式。
+			如要自定义schedules则可以使用 CustomScheduler类来辅助实现；
+ * @author Administrator
+ *
+ */
 public class AbstractScheduledServiceTest extends AbstractScheduledService {
 
 	@Override
